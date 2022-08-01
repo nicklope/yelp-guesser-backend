@@ -8,13 +8,21 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Game.belongsTo(models.User, { foreignKey: 'userId' })
     }
   }
   Game.init(
     {
       score: DataTypes.INTEGER,
-      gameType: DataTypes.STRING
+      gameType: DataTypes.STRING,
+      userId: {
+        type: DataTypes.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'users',
+          key: 'id'
+        }
+      }
     },
     {
       sequelize,
